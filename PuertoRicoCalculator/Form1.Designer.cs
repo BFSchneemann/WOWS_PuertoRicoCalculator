@@ -44,10 +44,15 @@
             this.label5 = new System.Windows.Forms.Label();
             this.txtPPMMin = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
+            this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTarget)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCurrentPoints)).BeginInit();
+            this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -234,6 +239,38 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "PPM zum Erreichen (mindestens):";
             // 
+            // menuMain
+            // 
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dateiToolStripMenuItem});
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Name = "menuMain";
+            this.menuMain.Size = new System.Drawing.Size(821, 24);
+            this.menuMain.TabIndex = 17;
+            this.menuMain.Text = "menuStrip1";
+            // 
+            // dateiToolStripMenuItem
+            // 
+            this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.speichernToolStripMenuItem,
+            this.beendenToolStripMenuItem});
+            this.dateiToolStripMenuItem.Name = "dateiToolStripMenuItem";
+            this.dateiToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.dateiToolStripMenuItem.Text = "Datei";
+            // 
+            // speichernToolStripMenuItem
+            // 
+            this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.speichernToolStripMenuItem.Text = "Speichern";
+            this.speichernToolStripMenuItem.Click += new System.EventHandler(this.SpeichernToolStripMenuItem_Click);
+            // 
+            // beendenToolStripMenuItem
+            // 
+            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beendenToolStripMenuItem.Text = "Beenden";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -253,12 +290,16 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmdCalc);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuMain);
+            this.MainMenuStrip = this.menuMain;
             this.Name = "Form1";
             this.Text = "Punkterechner";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numPPM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTarget)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numCurrentPoints)).EndInit();
+            this.menuMain.ResumeLayout(false);
+            this.menuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,6 +323,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtPPMMin;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MenuStrip menuMain;
+        private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem speichernToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
     }
 }
 

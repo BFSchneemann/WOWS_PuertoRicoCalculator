@@ -6,15 +6,69 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace PuertoRicoCalculator
 {
     public partial class Form1 : Form
     {
+        private string dataPath = ".\\saved_data.csv";
+
         public Form1()
         {
             InitializeComponent();
             this.endDatePicker.MinDate = DateTime.Now.AddDays(1); // Verhindert die Auswahl des gleichen Tages
+            ReadSavedData();
+        }
+
+        private void SaveData()
+        {
+            StreamWriter writer = new StreamWriter(File.OpenWrite(dataPath));
+
+            string line = numPPM.Value.ToString() + "," + numCurrentPoints.Value.ToString() + "," + numTarget.Value.ToString(); 
+
+            writer.WriteLine(line);
+
+            writer.Close();
+        }
+
+        private void ReadSavedData()
+        {
+            if (!File.Exists(dataPath))
+            {
+               File.Create(dataPath).Close();
+            }
+
+            StreamReader reader = new StreamReader(File.OpenRead(dataPath));
+            string[] values = null;
+
+            if (!reader.EndOfStream)
+            {
+                string line = reader.ReadLine();
+                values = line.Split(',');
+            }
+
+            if (values != null && values.Length == 3)
+            {
+                try
+                {
+                    numPPM.Value = Convert.ToDecimal(values[0]);
+                    numCurrentPoints.Value = Convert.ToDecimal(values[1]);
+                    numTarget.Value = Convert.ToDecimal(values[2]);
+                }
+                catch (FormatException e)
+                {
+                    MessageBox.Show(e.ToString(), "Ungültige Werte beim Einlesen erkannt!");
+                }
+            }
+            else
+            {
+                numPPM.Value = 0;
+                numCurrentPoints.Value = 0;
+                numTarget.Value = 0;
+            }
+
+            reader.Close();
         }
 
         /// <summary>
@@ -38,7 +92,6 @@ namespace PuertoRicoCalculator
 
             PrintResult(timeLeft, timeNeeded, ppmNeeded);
         }
-
         
         /// <summary>
         /// Ausgabe aller Ergebnisse, sowie farbliche Interpretation.
@@ -80,24 +133,14 @@ namespace PuertoRicoCalculator
                 endTimePicker.Value.Second);
         }
 
-        /* Wird nicht benötigt (Konstruktor von TimeSpan erledigt das bereits)
-        private TimeSpan GetTimeNeeded(Decimal timeLeftSeconds)
+        /// <summary>
+        /// Evenhandler für den Menüeintrag "Speichern"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SpeichernToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decimal truncLeftSeconds = Math.Ceiling(timeLeftSeconds);
-
-            int days = Convert.ToInt32(Math.Truncate((truncLeftSeconds / 3600) / 24));
-            truncLeftSeconds -= (days * 24 * 3600);
-
-            int hours = Convert.ToInt32(Math.Truncate(truncLeftSeconds / 3600));
-            truncLeftSeconds -= (hours * 3600);
-
-            int minutes = Convert.ToInt32(Math.Truncate(truncLeftSeconds / 60));
-            truncLeftSeconds -= (minutes * 60);
-
-            int seconds = Convert.ToInt32(Math.Truncate(truncLeftSeconds));
-
-            return (new TimeSpan(days, hours, minutes, seconds));
+            SaveData();
         }
-        */
     }
 }
